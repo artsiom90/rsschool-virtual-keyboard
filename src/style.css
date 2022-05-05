@@ -14,11 +14,11 @@
     gap: 20px;
 }
 
-.title {
+.keyboard-title {
     padding-top: 20px;
 }
 
-.text-input-area {
+.keyboard-textarea {
     padding: 3px;
     width: 700px;
     height: 200px;
@@ -26,6 +26,70 @@
     border: 1px solid black;
 }
 
-.text-input-area:focus {
+.keyboard-textarea:focus {
     border: 2px solid black;
+}
+
+.keyboard {
+    background: #888888;
+}
+
+.keyboard-row {
+    margin: 5px;
+    display: flex;
+    gap: 5px;
+}
+
+.keyboard-key {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    background: #444444;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.keyboard-key:hover {
+    background: gainsboro;
+    color: black;
+    transition: .4s;
+}
+
+.keyboard-key:active {
+    background: grey;
+}
+
+.Space {
+    width: 310px;
+}
+
+.keyboard-key-lg {
+    width: 85px;
+    background: black;
+}
+
+.keyboard-key-md {
+    width: 40px;
+    background: black;
+}
+
+.keyboard-key-sm {
+    background: black;
+}
+
+.keyboard-hidden {
+    display: none;
+}
+
+.keyboard-key-active {
+    background: greenyellow;
+    color: black;
+    transition: .3s;
+}
+
+.keyboard-key-disabled {
+    background: gainsboro;
 }
