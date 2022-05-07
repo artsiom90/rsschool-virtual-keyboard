@@ -26,191 +26,69 @@ for (let i = 0; i < 5; i++) {
   keyboard.append(keyboardRow.cloneNode());
 }
 
-const keysClassesR1 = [
-  'Backquote',
-  'Digit1',
-  'Digit2',
-  'Digit3',
-  'Digit4',
-  'Digit5',
-  'Digit6',
-  'Digit7',
-  'Digit8',
-  'Digit9',
-  'Digit0',
-  'Minus',
-  'Equal',
-  'Backspace',
-];
+const initKeyboardKeyLine = (
+  lineIndex,
+  keyClasses,
+  keyUpClasses,
+  keyDownClasses,
+) => {
+  for (let i = 0; i < keyClasses.length; i++) {
+    const button = document.createElement('button');
+    button.classList.add(keyClasses[i]);
+    button.classList.add('keyboard-key');
+    if (keyUpClasses[i] === 'Backspace') button.classList.add('keyboard-key-lg');
+    if (keyUpClasses[i] === 'Tab' || keyUpClasses[i] === 'Del') button.classList.add('keyboard-key-md');
+    if (keyUpClasses[i] === 'CapsLock' || keyUpClasses[i] === 'Enter') button.classList.add('keyboard-key-lg');
+    if (keyUpClasses[i] === 'Shift') button.classList.add('keyboard-key-lg');
+    if (keyUpClasses[i] === 'Ctrl' || keyUpClasses[i] === 'Win' || keyUpClasses[i] === 'Alt') button.classList.add('keyboard-key-sm');
 
+    const spanCaseUp = document.createElement('span');
+    spanCaseUp.classList.add('key-case-up');
+    spanCaseUp.innerHTML = keyUpClasses[i];
+    button.append(spanCaseUp);
+
+    if (keyDownClasses) {
+      const spanCaseDown = document.createElement('span');
+      spanCaseDown.classList.add('key-case-down');
+      spanCaseDown.innerHTML = keyDownClasses[i];
+      spanCaseDown.classList.add('keyboard-hidden');
+      button.append(spanCaseDown);
+    } else {
+      spanCaseUp.classList.remove('key-case-up');
+    }
+
+    keyboard.children[lineIndex].append(button);
+  }
+};
+
+// keyLine 1
+const keysClassesR1 = ['Backquote', 'Digit1', 'Digit2', 'Digit3', 'Digit4', 'Digit5', 'Digit6', 'Digit7', 'Digit8', 'Digit9', 'Digit0', 'Minus', 'Equal', 'Backspace'];
 const keyCaseUpR1 = ['`', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', '-', '=', 'Backspace'];
 const keyCaseDownR1 = ['~', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', 'Backspace'];
+initKeyboardKeyLine(0, keysClassesR1, keyCaseUpR1, keyCaseDownR1);
 
-for (let i = 0; i < keysClassesR1.length; i++) {
-  const button = document.createElement('button');
-  button.classList.add(keysClassesR1[i]);
-  button.classList.add('keyboard-key');
-  if (keyCaseUpR1[i] === 'Backspace') button.classList.add('keyboard-key-lg');
-
-  const spanCaseUp = document.createElement('span');
-  spanCaseUp.classList.add('key-case-up');
-  spanCaseUp.innerHTML = keyCaseUpR1[i];
-  button.append(spanCaseUp);
-
-  const spanCaseDown = document.createElement('span');
-  spanCaseDown.classList.add('key-case-down');
-  spanCaseDown.innerHTML = keyCaseDownR1[i];
-  spanCaseDown.classList.add('keyboard-hidden');
-  button.append(spanCaseDown);
-
-  keyboard.children[0].append(button);
-}
-
-const keysClassesR2 = [
-  'Tab',
-  'KeyQ',
-  'KeyW',
-  'KeyE',
-  'KeyR',
-  'KeyT',
-  'KeyY',
-  'KeyU',
-  'KeyI',
-  'KeyO',
-  'KeyP',
-  'BracketLeft',
-  'BracketRight',
-  'Backslash',
-  'Delete',
-];
-
+// keyLine 2
+const keysClassesR2 = ['Tab', 'KeyQ', 'KeyW', 'KeyE', 'KeyR', 'KeyT', 'KeyY', 'KeyU', 'KeyI', 'KeyO', 'KeyP', 'BracketLeft', 'BracketRight', 'Backslash', 'Delete'];
 const keyCaseUpR2 = ['Tab', 'q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', '[', ']', '\\', 'Del'];
 const keyCaseDownR2 = ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '|', 'Del'];
+initKeyboardKeyLine(1, keysClassesR2, keyCaseUpR2, keyCaseDownR2);
 
-for (let i = 0; i < keysClassesR2.length; i++) {
-  const button = document.createElement('button');
-  button.classList.add(keysClassesR2[i]);
-  button.classList.add('keyboard-key');
-  if (keyCaseUpR2[i] === 'Tab' || keyCaseUpR2[i] === 'Del') button.classList.add('keyboard-key-md');
-
-  const spanCaseUp = document.createElement('span');
-  spanCaseUp.classList.add('key-case-up');
-  spanCaseUp.innerHTML = keyCaseUpR2[i];
-  button.append(spanCaseUp);
-
-  const spanCaseDown = document.createElement('span');
-  spanCaseDown.classList.add('key-case-down');
-  spanCaseDown.innerHTML = keyCaseDownR2[i];
-  spanCaseDown.classList.add('keyboard-hidden');
-  button.append(spanCaseDown);
-
-  keyboard.children[1].append(button);
-}
-
-const keysClassesR3 = [
-  'CapsLock',
-  'KeyA',
-  'KeyS',
-  'KeyD',
-  'Keyf',
-  'KeyG',
-  'KeyH',
-  'KeyJ',
-  'KeyK',
-  'KeyL',
-  'Semicolon',
-  'Quote',
-  'Enter',
-];
-
+// keyLine 3
+const keysClassesR3 = ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'Keyf', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'];
 const keyCaseUpR3 = ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'];
 const keyCaseDownR3 = ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter'];
+initKeyboardKeyLine(2, keysClassesR3, keyCaseUpR3, keyCaseDownR3);
 
-for (let i = 0; i < keysClassesR3.length; i++) {
-  const button = document.createElement('button');
-  button.classList.add(keysClassesR3[i]);
-  button.classList.add('keyboard-key');
-  if (keyCaseUpR3[i] === 'CapsLock' || keyCaseUpR3[i] === 'Enter') button.classList.add('keyboard-key-lg');
-
-  const spanCaseUp = document.createElement('span');
-  spanCaseUp.classList.add('key-case-up');
-  spanCaseUp.innerHTML = keyCaseUpR3[i];
-  button.append(spanCaseUp);
-
-  const spanCaseDown = document.createElement('span');
-  spanCaseDown.classList.add('key-case-down');
-  spanCaseDown.innerHTML = keyCaseDownR3[i];
-  spanCaseDown.classList.add('keyboard-hidden');
-  button.append(spanCaseDown);
-
-  keyboard.children[2].append(button);
-}
-
-const keysClassesR4 = [
-  'ShiftLeft',
-  'KeyZ',
-  'KeyX',
-  'KeyC',
-  'KeyV',
-  'KeyB',
-  'KeyN',
-  'KeyM',
-  'Comma',
-  'Period',
-  'Slash',
-  'ArrowUp',
-  'ShiftRight',
-];
-
+// keyLine 4
+const keysClassesR4 = ['ShiftLeft', 'KeyZ', 'KeyX', 'KeyC', 'KeyV', 'KeyB', 'KeyN', 'KeyM', 'Comma', 'Period', 'Slash', 'ArrowUp', 'ShiftRight'];
 const keyCaseUpR4 = ['Shift', 'z', 'x', 'c', 'v', 'b', 'n', 'm', ',', '.', '/', '&#8593', 'Shift'];
 const keyCaseDownR4 = ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?', '&#8593', 'Shift'];
+initKeyboardKeyLine(3, keysClassesR4, keyCaseUpR4, keyCaseDownR4);
 
-for (let i = 0; i < keysClassesR4.length; i++) {
-  const button = document.createElement('button');
-  button.classList.add(keysClassesR4[i]);
-  button.classList.add('keyboard-key');
-  if (keyCaseUpR4[i] === 'Shift') button.classList.add('keyboard-key-lg');
-
-  const spanCaseUp = document.createElement('span');
-  spanCaseUp.classList.add('key-case-up');
-  spanCaseUp.innerHTML = keyCaseUpR4[i];
-  button.append(spanCaseUp);
-
-  const spanCaseDown = document.createElement('span');
-  spanCaseDown.classList.add('key-case-down');
-  spanCaseDown.innerHTML = keyCaseDownR4[i];
-  spanCaseDown.classList.add('keyboard-hidden');
-  button.append(spanCaseDown);
-
-  keyboard.children[3].append(button);
-}
-
-const keysClassesR5 = [
-  'CotrolLeft',
-  'MetaLeft',
-  'AltLeft',
-  'Space',
-  'AltRight',
-  'ArrowLeft',
-  'ArrowDown',
-  'ArrowRight',
-  'CotrolRight',
-];
-
+// keyLine 5
+const keysClassesR5 = ['CotrolLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'CotrolRight'];
 const keyCaseUpR5 = ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
-
-for (let i = 0; i < keysClassesR5.length; i++) {
-  const button = document.createElement('button');
-  button.classList.add(keysClassesR5[i]);
-  button.classList.add('keyboard-key');
-  if (keyCaseUpR5[i] === 'Ctrl' || keyCaseUpR5[i] === 'Win' || keyCaseUpR5[i] === 'Alt') button.classList.add('keyboard-key-sm');
-
-  const spanCaseUp = document.createElement('span');
-  spanCaseUp.innerHTML = keyCaseUpR5[i];
-  button.append(spanCaseUp);
-
-  keyboard.children[4].append(button);
-}
+initKeyboardKeyLine(4, keysClassesR5, keyCaseUpR5);
 
 const keys = document.querySelectorAll('button');
 
