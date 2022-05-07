@@ -10,6 +10,7 @@ wrapper.append(title);
 
 const textArea = document.createElement('textarea');
 textArea.classList.add('keyboard-textarea');
+textArea.autofocus = true;
 textArea.cols = 50;
 textArea.rows = 5;
 wrapper.append(textArea);
@@ -196,7 +197,7 @@ const keysClassesR5 = [
   'CotrolRight',
 ];
 
-const keyCaseUpR5 = ['Ctrl', 'Win', 'Alt', ' ', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
+const keyCaseUpR5 = ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
 
 for (let i = 0; i < keysClassesR5.length; i++) {
   const button = document.createElement('button');
@@ -261,5 +262,66 @@ keys.forEach((key) => key.addEventListener('mousedown', (e) => {
       document.querySelector('.ShiftLeft').classList.remove('keyboard-key-disabled');
       document.querySelector('.ShiftRight').classList.remove('keyboard-key-disabled');
     }
+  }
+}));
+
+const keysNotSymbols = ['Backspace', 'Space', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
+
+keys.forEach((item) => item.addEventListener('mousedown', (e) => {
+  e.preventDefault();
+  textArea.focus();
+  const symbol = !keysNotSymbols.includes(e.currentTarget.innerText) && e.currentTarget.innerText;
+  switch (e.currentTarget.innerText) {
+    case symbol:
+      textArea.value += symbol;
+      break;
+    case 'Tab': {
+      const cursorIndex = textArea.selectionEnd;
+      let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+      const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+      valuePart1 += '  ';
+      textArea.value = `${valuePart1}${valuePart2}`;
+      textArea.selectionEnd = cursorIndex + 2;
+    }
+      break;
+    case 'Space': {
+      const cursorIndex = textArea.selectionEnd;
+      let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+      const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+      valuePart1 += ' ';
+      textArea.value = `${valuePart1}${valuePart2}`;
+      textArea.selectionEnd = cursorIndex + 1;
+    }
+      break;
+    case 'Backspace': {
+      const cursorIndex = textArea.selectionEnd;
+      let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+      const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+      valuePart1 = valuePart1.slice(0, valuePart1.length - 1);
+      textArea.value = `${valuePart1}${valuePart2}`;
+      textArea.selectionEnd = cursorIndex - 1;
+      if (cursorIndex === 0) {
+        textArea.setSelectionRange(0, 0);
+      }
+    }
+      break;
+    case 'Del': {
+      const cursorIndex = textArea.selectionEnd;
+      const array = textArea.value.split('');
+      array.splice(cursorIndex, 1);
+      textArea.value = array.join('');
+      textArea.selectionEnd = cursorIndex;
+    }
+      break;
+    case 'Enter': {
+      const cursorIndex = textArea.selectionEnd;
+      const valuePart1 = textArea.value.slice(0, cursorIndex);
+      const valuePart2 = textArea.value.slice(cursorIndex);
+      textArea.value = `${valuePart1}\n${valuePart2}`;
+      textArea.selectionEnd = cursorIndex + 1;
+    }
+      break;
+    default:
+      break;
   }
 }));

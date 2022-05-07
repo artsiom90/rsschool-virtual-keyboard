@@ -52,18 +52,17 @@
     cursor: pointer;
 }
 
-.keyboard-key:hover {
-    background: gainsboro;
-    color: black;
-    transition: .4s;
-}
-
 .keyboard-key:active {
     background: grey;
 }
 
 .Space {
     width: 310px;
+    color: #444444;
+}
+
+.Space:active {
+    color: grey;
 }
 
 .keyboard-key-lg {
