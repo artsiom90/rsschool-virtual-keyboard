@@ -74,7 +74,7 @@ const keyCaseDownR2 = ['Tab', 'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 
 initKeyboardKeyLine(1, keysClassesR2, keyCaseUpR2, keyCaseDownR2);
 
 // keyLine 3
-const keysClassesR3 = ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'Keyf', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'];
+const keysClassesR3 = ['CapsLock', 'KeyA', 'KeyS', 'KeyD', 'KeyF', 'KeyG', 'KeyH', 'KeyJ', 'KeyK', 'KeyL', 'Semicolon', 'Quote', 'Enter'];
 const keyCaseUpR3 = ['CapsLock', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', ';', '\'', 'Enter'];
 const keyCaseDownR3 = ['CapsLock', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', 'Enter'];
 initKeyboardKeyLine(2, keysClassesR3, keyCaseUpR3, keyCaseDownR3);
@@ -86,7 +86,7 @@ const keyCaseDownR4 = ['Shift', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?'
 initKeyboardKeyLine(3, keysClassesR4, keyCaseUpR4, keyCaseDownR4);
 
 // keyLine 5
-const keysClassesR5 = ['CotrolLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'CotrolRight'];
+const keysClassesR5 = ['ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
 const keyCaseUpR5 = ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
 initKeyboardKeyLine(4, keysClassesR5, keyCaseUpR5);
 
@@ -112,13 +112,6 @@ keys.forEach((key) => key.addEventListener('mousedown', (e) => {
       document.querySelector('.ShiftLeft').disabled = false;
       document.querySelector('.ShiftLeft').classList.remove('keyboard-key-disabled');
     }
-    if (e.currentTarget.classList.contains('keyboard-key-active')) {
-      document.querySelector('.CapsLock').disabled = true;
-      document.querySelector('.CapsLock').classList.add('keyboard-key-disabled');
-    } else {
-      document.querySelector('.CapsLock').disabled = false;
-      document.querySelector('.CapsLock').classList.remove('keyboard-key-disabled');
-    }
   }
 
   if (e.currentTarget.classList.contains('CapsLock')) {
@@ -129,26 +122,15 @@ keys.forEach((key) => key.addEventListener('mousedown', (e) => {
       item.parentElement.classList[0].startsWith('Key') && item.classList.toggle('keyboard-hidden')
     ));
     e.currentTarget.classList.toggle('keyboard-key-active');
-    if (e.currentTarget.classList.contains('keyboard-key-active')) {
-      document.querySelector('.ShiftLeft').disabled = true;
-      document.querySelector('.ShiftRight').disabled = true;
-      document.querySelector('.ShiftLeft').classList.add('keyboard-key-disabled');
-      document.querySelector('.ShiftRight').classList.add('keyboard-key-disabled');
-    } else {
-      document.querySelector('.ShiftLeft').disabled = false;
-      document.querySelector('.ShiftRight').disabled = false;
-      document.querySelector('.ShiftLeft').classList.remove('keyboard-key-disabled');
-      document.querySelector('.ShiftRight').classList.remove('keyboard-key-disabled');
-    }
   }
 }));
 
-const keysNotSymbols = ['Backspace', 'Space', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
+const functionalKeys = ['Backspace', 'Space', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
 
 keys.forEach((item) => item.addEventListener('mousedown', (e) => {
   e.preventDefault();
   textArea.focus();
-  const symbol = !keysNotSymbols.includes(e.currentTarget.innerText) && e.currentTarget.innerText;
+  const symbol = !functionalKeys.includes(e.currentTarget.innerText) && e.currentTarget.innerText;
   switch (e.currentTarget.innerText) {
     case symbol:
       textArea.value += symbol;
@@ -203,3 +185,103 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
       break;
   }
 }));
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Tab') {
+    e.preventDefault();
+    const cursorIndex = textArea.selectionEnd;
+    let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+    const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+    valuePart1 += '  ';
+    textArea.value = `${valuePart1}${valuePart2}`;
+    textArea.selectionEnd = cursorIndex + 2;
+  }
+
+  if (e.getModifierState('CapsLock')) {
+    document.querySelectorAll('.key-case-up').forEach((item) => (
+      item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+    ));
+    document.querySelectorAll('.key-case-down').forEach((item) => (
+      item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+    ));
+    if (e.code === 'CapsLock') document.querySelector('.CapsLock').classList.add('keyboard-key-active');
+  }
+
+  keys.forEach((key) => {
+    if (key.classList.contains(e.code)) key.classList.add('keyboard-key-active-typing');
+    if (e.code === 'Space') document.querySelector('.Space').style.color = 'grey';
+
+    switch (e.code) {
+      case 'ShiftLeft':
+        document.querySelectorAll('.key-case-up').forEach((item) => item.classList.add('keyboard-hidden'));
+        document.querySelectorAll('.key-case-down').forEach((item) => item.classList.remove('keyboard-hidden'));
+        break;
+      case 'ShiftRight':
+        document.querySelectorAll('.key-case-up').forEach((item) => item.classList.add('keyboard-hidden'));
+        document.querySelectorAll('.key-case-down').forEach((item) => item.classList.remove('keyboard-hidden'));
+        break;
+      default:
+        break;
+    }
+  });
+});
+
+document.addEventListener('keyup', (e) => {
+  if (!e.getModifierState('CapsLock')) {
+    document.querySelectorAll('.key-case-up').forEach((item) => (
+      item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+    ));
+    document.querySelectorAll('.key-case-down').forEach((item) => (
+      item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+    ));
+    if (e.code === 'CapsLock') document.querySelector('.CapsLock').classList.remove('keyboard-key-active');
+  }
+
+  keys.forEach((key) => {
+    if (key.classList.contains(e.code)) key.classList.remove('keyboard-key-active-typing');
+    if (e.code === 'Space') document.querySelector('.Space').style.color = '#444444';
+
+    switch (e.code) {
+      case 'ShiftLeft':
+        if (document.querySelector('.CapsLock').classList.contains('keyboard-key-active')) {
+          document.querySelectorAll('.key-case-up').forEach((item) => (
+            item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-down').forEach((item) => (
+            item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-up').forEach((item) => (
+            !item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-down').forEach((item) => (
+            !item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+          ));
+        } else {
+          document.querySelectorAll('.key-case-up').forEach((item) => item.classList.remove('keyboard-hidden'));
+          document.querySelectorAll('.key-case-down').forEach((item) => item.classList.add('keyboard-hidden'));
+        }
+        break;
+      case 'ShiftRight':
+        if (document.querySelector('.CapsLock').classList.contains('keyboard-key-active')) {
+          document.querySelectorAll('.key-case-up').forEach((item) => (
+            item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-down').forEach((item) => (
+            item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-up').forEach((item) => (
+            !item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
+          ));
+          document.querySelectorAll('.key-case-down').forEach((item) => (
+            !item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
+          ));
+        } else {
+          document.querySelectorAll('.key-case-up').forEach((item) => item.classList.remove('keyboard-hidden'));
+          document.querySelectorAll('.key-case-down').forEach((item) => item.classList.add('keyboard-hidden'));
+        }
+        break;
+      default:
+        break;
+    }
+  });
+});

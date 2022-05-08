@@ -86,9 +86,13 @@
 .keyboard-key-active {
     background: greenyellow;
     color: black;
-    transition: .3s;
+}
+
+.keyboard-key-active-typing {
+    background: grey;
 }
 
 .keyboard-key-disabled {
     background: gainsboro;
+    color: black;
 }
