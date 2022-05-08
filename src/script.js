@@ -1,3 +1,5 @@
+import './style.css';
+
 /* eslint-disable no-plusplus */
 const wrapper = document.createElement('div');
 wrapper.classList.add('wrapper');
