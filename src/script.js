@@ -1,4 +1,5 @@
-import './style.css';
+/* eslint-disable no-param-reassign */
+// import './style.css';
 
 /* eslint-disable no-plusplus */
 const wrapper = document.createElement('div');
@@ -42,7 +43,7 @@ const initKeyboardKeyLine = (
     if (keyUpClasses[i] === 'Tab' || keyUpClasses[i] === 'Del') button.classList.add('keyboard-key-md');
     if (keyUpClasses[i] === 'CapsLock' || keyUpClasses[i] === 'Enter') button.classList.add('keyboard-key-lg');
     if (keyUpClasses[i] === 'Shift') button.classList.add('keyboard-key-lg');
-    if (keyUpClasses[i] === 'Ctrl' || keyUpClasses[i] === 'Win' || keyUpClasses[i] === 'Alt') button.classList.add('keyboard-key-sm');
+    if (keyUpClasses[i] === 'Ctrl' || keyUpClasses[i] === 'eng' || keyUpClasses[i] === 'Alt') button.classList.add('keyboard-key-sm');
 
     const spanCaseUp = document.createElement('span');
     spanCaseUp.classList.add('key-case-up');
@@ -89,8 +90,84 @@ initKeyboardKeyLine(3, keysClassesR4, keyCaseUpR4, keyCaseDownR4);
 
 // keyLine 5
 const keysClassesR5 = ['ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
-const keyCaseUpR5 = ['Ctrl', 'Win', 'Alt', 'Space', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
+const keyCaseUpR5 = ['Ctrl', 'eng', 'Alt', 'English', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
 initKeyboardKeyLine(4, keysClassesR5, keyCaseUpR5);
+
+// change language
+const keysSpan = document.querySelectorAll('span');
+const lang = 'en';
+
+localStorage.setItem('lang', lang);
+
+const byCaseDown = ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Ў', 'З', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Я', 'Ч', 'С', 'М', 'І', 'Т', 'Ь', 'Б', 'Ю'];
+const byCaseUp = ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'ў', 'з', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'я', 'ч', 'с', 'м', 'і', 'т', 'ь', 'б', 'ю'];
+const engCaseDown = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?'];
+const engCaseUp = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?'];
+
+const changeLanguage = () => {
+  const array = ['en', 'by'];
+  const itemLang = array.filter((item) => item !== localStorage.getItem('lang'));
+  localStorage.setItem('lang', ...itemLang);
+
+  switch (localStorage.getItem('lang')) {
+    case 'en': {
+      document.querySelector('.Space').innerHTML = 'English';
+      document.querySelector('.MetaLeft').innerHTML = 'eng';
+      let keyIndex = 0;
+      keysSpan.forEach((key) => {
+        if ((key.parentElement.classList[0].startsWith('Key')
+          || key.parentElement.classList.contains('Comma')
+          || key.parentElement.classList.contains('Period'))
+          && key.classList.contains('key-case-up')
+          && !key.classList.contains('keyboard-hidden')) {
+          key.innerHTML = engCaseUp[keyIndex];
+          keyIndex++;
+        }
+        if ((key.parentElement.classList[0].startsWith('Key')
+          || key.parentElement.classList.contains('Comma')
+          || key.parentElement.classList.contains('Period'))
+          && key.classList.contains('key-case-down')
+          && !key.classList.contains('keyboard-hidden')) {
+          key.innerHTML = engCaseDown[keyIndex];
+          keyIndex++;
+        }
+      });
+    }
+      break;
+    case 'by': {
+      document.querySelector('.Space').innerHTML = 'Беларуская';
+      document.querySelector('.MetaLeft').innerHTML = 'by';
+      let keyIndex = 0;
+      keysSpan.forEach((key) => {
+        if ((key.parentElement.classList[0].startsWith('Key')
+          || key.parentElement.classList.contains('Comma')
+          || key.parentElement.classList.contains('Period'))
+          && key.classList.contains('key-case-up')
+          && !key.classList.contains('keyboard-hidden')) {
+          key.innerHTML = byCaseUp[keyIndex];
+          keyIndex++;
+        }
+        if ((key.parentElement.classList[0].startsWith('Key')
+          || key.parentElement.classList.contains('Comma')
+          || key.parentElement.classList.contains('Period'))
+          && key.classList.contains('key-case-down')
+          && !key.classList.contains('keyboard-hidden')) {
+          key.innerHTML = byCaseDown[keyIndex];
+          keyIndex++;
+        }
+      });
+    }
+      break;
+    default:
+      break;
+  }
+};
+
+document.addEventListener('keydown', (e) => {
+  if (e.ctrlKey && e.altKey) changeLanguage();
+});
+
+document.querySelector('.MetaLeft').addEventListener('click', changeLanguage);
 
 const keys = document.querySelectorAll('button');
 
@@ -127,7 +204,7 @@ keys.forEach((key) => key.addEventListener('mousedown', (e) => {
   }
 }));
 
-const functionalKeys = ['Backspace', 'Space', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
+const functionalKeys = ['Backspace', 'English', 'Беларуская', 'eng', 'by', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
 
 keys.forEach((item) => item.addEventListener('mousedown', (e) => {
   e.preventDefault();
@@ -146,7 +223,7 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
       textArea.selectionEnd = cursorIndex + 2;
     }
       break;
-    case 'Space': {
+    case 'English' || 'Беларуская': {
       const cursorIndex = textArea.selectionEnd;
       let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
       const valuePart2 = textArea.value.slice(textArea.selectionEnd);
@@ -154,6 +231,9 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
       textArea.value = `${valuePart1}${valuePart2}`;
       textArea.selectionEnd = cursorIndex + 1;
     }
+      break;
+    case 'eng' || 'by':
+      textArea.value += '';
       break;
     case 'Backspace': {
       const cursorIndex = textArea.selectionEnd;
@@ -199,7 +279,7 @@ document.addEventListener('keydown', (e) => {
     textArea.selectionEnd = cursorIndex + 2;
   }
 
-  if (e.getModifierState('CapsLock')) {
+  if (e.getModifierState('CapsLock') && e.code === 'CapsLock') {
     document.querySelectorAll('.key-case-up').forEach((item) => (
       item.parentElement.classList[0].startsWith('Key') && item.classList.add('keyboard-hidden')
     ));
@@ -211,7 +291,7 @@ document.addEventListener('keydown', (e) => {
 
   keys.forEach((key) => {
     if (key.classList.contains(e.code)) key.classList.add('keyboard-key-active-typing');
-    if (e.code === 'Space') document.querySelector('.Space').style.color = 'grey';
+    if (e.code === 'Space') document.querySelector('.Space').style.color = 'white';
 
     switch (e.code) {
       case 'ShiftLeft':
@@ -241,7 +321,7 @@ document.addEventListener('keyup', (e) => {
 
   keys.forEach((key) => {
     if (key.classList.contains(e.code)) key.classList.remove('keyboard-key-active-typing');
-    if (e.code === 'Space') document.querySelector('.Space').style.color = '#444444';
+    if (e.code === 'Space') document.querySelector('.Space').style.color = 'white';
 
     switch (e.code) {
       case 'ShiftLeft':
@@ -285,5 +365,20 @@ document.addEventListener('keyup', (e) => {
       default:
         break;
     }
+  });
+});
+
+document.addEventListener('keypress', (e) => {
+  e.preventDefault();
+  if (e.code === 'Space') {
+    const cursorIndex = textArea.selectionEnd;
+    let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+    const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+    valuePart1 += ' ';
+    textArea.value = `${valuePart1}${valuePart2}`;
+    textArea.selectionEnd = cursorIndex + 1;
+  }
+  keys.forEach((key) => {
+    if (e.code !== 'Space' && key.classList.contains(e.code)) textArea.value += key.innerText;
   });
 });
