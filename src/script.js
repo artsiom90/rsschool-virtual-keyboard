@@ -1,4 +1,4 @@
-// // import './style.css';
+// import './style.css';
 
 const wrapper = document.createElement('div');
 wrapper.classList.add('wrapper');
@@ -356,7 +356,7 @@ const keydownHandler = () => {
 
 const keyupnHandler = () => {
   document.addEventListener('keyup', (e) => {
-    if (!e.getModifierState('CapsLock')) {
+    if (!e.getModifierState('CapsLock') && e.code === 'CapsLock') {
       document.querySelectorAll('.key-case-up').forEach((item) => (
         item.parentElement.classList[0].startsWith('Key') && item.classList.remove('keyboard-hidden')
       ));
