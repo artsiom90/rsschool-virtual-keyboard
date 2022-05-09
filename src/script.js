@@ -95,20 +95,16 @@ initKeyboardKeyLine(4, keysClassesR5, keyCaseUpR5);
 
 // change language
 const keysSpan = document.querySelectorAll('span');
-const lang = 'en';
-
-localStorage.setItem('lang', lang);
 
 const byCaseDown = ['Й', 'Ц', 'У', 'К', 'Е', 'Н', 'Г', 'Ш', 'Ў', 'З', 'Ф', 'Ы', 'В', 'А', 'П', 'Р', 'О', 'Л', 'Д', 'Я', 'Ч', 'С', 'М', 'І', 'Т', 'Ь', 'Б', 'Ю'];
 const byCaseUp = ['й', 'ц', 'у', 'к', 'е', 'н', 'г', 'ш', 'ў', 'з', 'ф', 'ы', 'в', 'а', 'п', 'р', 'о', 'л', 'д', 'я', 'ч', 'с', 'м', 'і', 'т', 'ь', 'б', 'ю'];
 const engCaseDown = ['Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', 'A', 'S', 'D', 'F', 'G', 'H', 'J', 'K', 'L', 'Z', 'X', 'C', 'V', 'B', 'N', 'M', '<', '>', '?'];
 const engCaseUp = ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p', 'a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'z', 'x', 'c', 'v', 'b', 'n', 'm', '<', '>', '?'];
 
-const changeLanguage = () => {
-  const array = ['en', 'by'];
-  const itemLang = array.filter((item) => item !== localStorage.getItem('lang'));
-  localStorage.setItem('lang', ...itemLang);
+const lang = 'en';
+let programmClick = false;
 
+const changeLanguage = () => {
   switch (localStorage.getItem('lang')) {
     case 'en': {
       document.querySelector('.Space').innerHTML = 'English';
@@ -164,10 +160,35 @@ const changeLanguage = () => {
 };
 
 document.addEventListener('keydown', (e) => {
-  if (e.ctrlKey && e.altKey) changeLanguage();
+  if (e.ctrlKey && e.altKey) {
+    const array = ['en', 'by'];
+    const itemLang = array.filter((item) => item !== localStorage.getItem('lang'));
+    localStorage.setItem('lang', ...itemLang);
+    changeLanguage();
+  }
 });
 
-document.querySelector('.MetaLeft').addEventListener('click', changeLanguage);
+document.querySelector('.MetaLeft').addEventListener('click', () => {
+  const array = ['en', 'by'];
+  const itemLang = array.filter((item) => item !== localStorage.getItem('lang'));
+  localStorage.setItem('lang', ...itemLang);
+  changeLanguage();
+});
+
+const initSavedLanguage = () => {
+  if (programmClick) changeLanguage();
+  programmClick = false;
+};
+
+document.querySelector('.Space').addEventListener('click', initSavedLanguage);
+
+if (!localStorage.getItem('lang')) {
+  localStorage.setItem('lang', lang);
+} else {
+  programmClick = true;
+  document.querySelector('.Space').click();
+  document.querySelector('.Space').removeEventListener('click', initSavedLanguage);
+}
 
 const keys = document.querySelectorAll('button');
 
@@ -266,6 +287,7 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
     default:
       break;
   }
+  changeLanguage();
 }));
 
 document.addEventListener('keydown', (e) => {
@@ -305,6 +327,7 @@ document.addEventListener('keydown', (e) => {
       default:
         break;
     }
+    changeLanguage();
   });
 });
 
