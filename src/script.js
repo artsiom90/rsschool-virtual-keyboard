@@ -29,6 +29,15 @@ for (let i = 0; i < 5; i++) {
   keyboard.append(keyboardRow.cloneNode());
 }
 
+const descDiv = document.createElement('div');
+descDiv.classList.add('keyboard-additional-info');
+wrapper.append(descDiv);
+const descSpan1 = document.createElement('span');
+descSpan1.innerText = 'Operating system: Windows';
+const descSpan2 = document.createElement('Span');
+descSpan2.innerText = 'Language switching: Ctrl + Alt';
+descDiv.append(descSpan1, descSpan2);
+
 const initKeyboardKeyLine = (
   lineIndex,
   keyClasses,
