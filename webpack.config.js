@@ -6,7 +6,7 @@ module.exports = {
   mode: 'development',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
+    filename: '[hash].js',
     clean: true,
   },
   module: {
@@ -16,13 +16,14 @@ module.exports = {
         loader: 'html-loader',
       },
       {
-        test: /\.css$/i,
+        test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
     ],
   },
   plugins: [new HtmlWebpackPlugin({
     title: 'Virtual Keyboard',
+    filename: '[hash].html',
   })],
   devServer: {
     static: '.dist',
