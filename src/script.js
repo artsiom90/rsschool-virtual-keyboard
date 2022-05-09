@@ -244,7 +244,16 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
       textArea.selectionEnd = cursorIndex + 2;
     }
       break;
-    case 'English' || 'Беларуская': {
+    case 'English': {
+      const cursorIndex = textArea.selectionEnd;
+      let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
+      const valuePart2 = textArea.value.slice(textArea.selectionEnd);
+      valuePart1 += ' ';
+      textArea.value = `${valuePart1}${valuePart2}`;
+      textArea.selectionEnd = cursorIndex + 1;
+    }
+      break;
+    case 'Беларуская': {
       const cursorIndex = textArea.selectionEnd;
       let valuePart1 = textArea.value.slice(0, textArea.selectionEnd);
       const valuePart2 = textArea.value.slice(textArea.selectionEnd);
@@ -401,7 +410,14 @@ document.addEventListener('keypress', (e) => {
     textArea.value = `${valuePart1}${valuePart2}`;
     textArea.selectionEnd = cursorIndex + 1;
   }
+  if (e.code === 'Enter') {
+    const cursorIndex = textArea.selectionEnd;
+    const valuePart1 = textArea.value.slice(0, cursorIndex);
+    const valuePart2 = textArea.value.slice(cursorIndex);
+    textArea.value = `${valuePart1}\n${valuePart2}`;
+    textArea.selectionEnd = cursorIndex + 1;
+  }
   keys.forEach((key) => {
-    if (e.code !== 'Space' && key.classList.contains(e.code)) textArea.value += key.innerText;
+    if (e.code !== 'Space' && e.code !== 'Enter' && key.classList.contains(e.code)) textArea.value += key.innerText;
   });
 });
