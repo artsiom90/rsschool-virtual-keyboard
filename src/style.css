@@ -97,7 +97,7 @@
 }
 
 .keyboard-key-active-typing {
-    background: grey;
+    background: rgb(85, 85, 85);
 }
 
 .keyboard-key-disabled {
