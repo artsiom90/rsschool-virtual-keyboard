@@ -52,7 +52,7 @@ const initKeyboardKeyLine = (
     if (keyUpClasses[i] === 'Tab' || keyUpClasses[i] === 'Del') button.classList.add('keyboard-key-md');
     if (keyUpClasses[i] === 'CapsLock' || keyUpClasses[i] === 'Enter') button.classList.add('keyboard-key-lg');
     if (keyUpClasses[i] === 'Shift') button.classList.add('keyboard-key-lg');
-    if (keyUpClasses[i] === 'Ctrl' || keyUpClasses[i] === 'eng' || keyUpClasses[i] === 'Alt') button.classList.add('keyboard-key-sm');
+    if (keyUpClasses[i] === 'Ctrl' || keyUpClasses[i] === 'en' || keyUpClasses[i] === 'Alt') button.classList.add('keyboard-key-sm');
 
     const spanCaseUp = document.createElement('span');
     spanCaseUp.classList.add('key-case-up');
@@ -99,7 +99,7 @@ initKeyboardKeyLine(3, keysClassesR4, keyCaseUpR4, keyCaseDownR4);
 
 // keyLine 5
 const keysClassesR5 = ['ControlLeft', 'MetaLeft', 'AltLeft', 'Space', 'AltRight', 'ArrowLeft', 'ArrowDown', 'ArrowRight', 'ControlRight'];
-const keyCaseUpR5 = ['Ctrl', 'eng', 'Alt', 'English', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
+const keyCaseUpR5 = ['Ctrl', 'en', 'Alt', 'English', 'Alt', '&#8592', '&#8595', '&#8594', 'Ctrl'];
 initKeyboardKeyLine(4, keysClassesR5, keyCaseUpR5);
 
 // change language
@@ -117,7 +117,7 @@ const changeLanguage = () => {
   switch (localStorage.getItem('lang')) {
     case 'en': {
       document.querySelector('.Space').innerHTML = 'English';
-      document.querySelector('.MetaLeft').innerHTML = 'eng';
+      document.querySelector('.MetaLeft').innerHTML = 'en';
       let keyIndex = 0;
       keysSpan.forEach((key) => {
         if ((key.parentElement.classList[0].startsWith('Key')
@@ -234,7 +234,7 @@ keys.forEach((key) => key.addEventListener('mousedown', (e) => {
   }
 }));
 
-const functionalKeys = ['Backspace', 'English', 'Беларуская', 'eng', 'by', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
+const functionalKeys = ['Backspace', 'English', 'Беларуская', 'en', 'by', 'Tab', 'Del', 'CapsLock', 'Enter', 'Shift', 'Ctrl', 'Win', 'Alt'];
 
 keys.forEach((item) => item.addEventListener('mousedown', (e) => {
   e.preventDefault();
@@ -271,7 +271,7 @@ keys.forEach((item) => item.addEventListener('mousedown', (e) => {
       textArea.selectionEnd = cursorIndex + 1;
     }
       break;
-    case 'eng' || 'by':
+    case 'en' || 'by':
       textArea.value += '';
       break;
     case 'Backspace': {

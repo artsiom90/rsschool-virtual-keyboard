@@ -7,30 +7,40 @@
 
 .wrapper {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 20px;
+    background: black;
 }
 
 .keyboard-title {
-    padding-top: 20px;
+    padding-top: 15px;
+    color: white;
+    letter-spacing: 1px;
 }
 
 .keyboard-textarea {
+    font-size: 24px;
     padding: 3px;
     width: 700px;
     height: 200px;
-    border: 1px solid black;
+    color: white;
+    background: rgb(18, 18, 18);
+    outline: 2px solid white;
 }
 
 .keyboard-textarea:focus {
     border: 2px solid black;
 }
 
+.keyboard-textarea {
+    border: 2px solid black;
+}
+
 .keyboard {
-    background: #888888;
+    background: #3f3f3f;
 }
 
 .keyboard-row {
@@ -46,13 +56,13 @@
     justify-content: center;
     align-items: center;
     color: white;
-    background: #444444;
+    background: #1d1d1d;
     border-radius: 2px;
     cursor: pointer;
 }
 
 .keyboard-key:active {
-    background: grey;
+    background: rgb(85, 85, 85);
 }
 
 .Space {
@@ -60,7 +70,7 @@
 }
 
 .Space:active {
-    color: grey;
+    background: rgb(85, 85, 85);
 }
 
 .keyboard-key-lg {
@@ -82,8 +92,8 @@
 }
 
 .keyboard-key-active {
-    background: greenyellow;
-    color: black;
+    background: forestgreen;
+    color: white;
 }
 
 .keyboard-key-active-typing {
@@ -91,13 +101,14 @@
 }
 
 .keyboard-key-disabled {
-    background: gainsboro;
-    color: black;
+    background: rgb(148, 148, 148);
+    color: rgb(90, 90, 90);
 }
 
 .keyboard-additional-info {
     font-size: 24px;
-    font-weight: bold;
+    color: white;
+    letter-spacing: 1px;
     display: flex;
     flex-direction: column;
     align-items: center;
